@@ -58,18 +58,19 @@
                             <div class="mb-3 mt-3">
                                 <label for="Rating" class="form-label">Rating</label>
                                 <fieldset class="starability-slot">
-                                <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
-                                <input type="radio" id="first-rate1" name="review[rating]" value="1" />
-                                <label for="first-rate1" title="Terrible">1 star</label>
-                                <input type="radio" id="first-rate2" name="review[rating]" value="2" />
-                                <label for="first-rate2" title="Not good">2 stars</label>
-                                <input type="radio" id="first-rate3" name="review[rating]" value="3" />
-                                <label for="first-rate3" title="Average">3 stars</label>
-                                <input type="radio" id="first-rate4" name="review[rating]" value="4" />
-                                <label for="first-rate4" title="Very good">4 stars</label>
-                                <input type="radio" id="first-rate5" name="review[rating]" value="5" />
-                                <label for="first-rate5" title="Amazing">5 stars</label>
-                              </fieldset>
+                                    <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]"
+                                        value="1" checked aria-label="No rating." />
+                                    <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                                    <label for="first-rate1" title="Terrible">1 star</label>
+                                    <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                                    <label for="first-rate2" title="Not good">2 stars</label>
+                                    <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                                    <label for="first-rate3" title="Average">3 stars</label>
+                                    <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                                    <label for="first-rate4" title="Very good">4 stars</label>
+                                    <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                                    <label for="first-rate5" title="Amazing">5 stars</label>
+                                </fieldset>
                             </div>
                             <div class="mb-3 mt-3">
                                 <label for="comment" class="form-label"> Comments</label>
@@ -83,31 +84,47 @@
                         <hr>
                         <%}%>
 
-                            <p><b>All Reviews</b></p>
 
-                            <div class="row">
+                            <%if (listing.reviews.length>0){%>
+                                <div class="row">
+                                    <p><b>All Reviews</b></p>
 
-                                <% for(review of listing.reviews){%>
-                                    <div class="card col-5 ms-3 mb-3">
-                                        <div class="card-body">
-                                            <h5 class="card-title">
-                                                @<%=review.author.username%>
-                                            </h5>
-                                            <p class="starability-result card-text" data-rating="<%=review.rating%>"></p>
-                                            <h6 class="card-text">
-                                                <%=review.comment%>
-                                            </h6>
-                                
+                                    <% for(review of listing.reviews){%>
+                                        <div class="card col-5 ms-3 mb-3">
+                                            <div class="card-body">
+                                                <h5 class="card-title">
+                                                    @<%=review.author.username%>
+                                                </h5>
+                                                <p class="starability-result card-text"
+                                                    data-rating="<%=review.rating%>"></p>
+                                                <h6 class="card-text">
+                                                    <%=review.comment%>
+                                                </h6>
+
+                                            </div>
+                                            <form
+                                                action="/listings/<%=listing._id%>/reviews/<%=review._id%>?_method=DELETE"
+                                                class="mb-3" method="POST">
+                                                <button class="btn btn-sm btn-dark mt-3">Delete</button>
+                                            </form>
                                         </div>
-                                        <form action="/listings/<%=listing._id%>/reviews/<%=review._id%>?_method=DELETE"
-                                            class="mb-3" method="POST">
-                                            <button class="btn btn-sm btn-dark mt-3">Delete</button>
-                                        </form>
-                                    </div>
-                                    <%}%>
-                            </div>
-
-
-
+                                        <%}%>
+                                </div>
+                                <%}%>
+                </div>
+                <div class="col-6 offset-3 mb-3">
+                    <h3>Where you will be</h3>
+                    <div id="map"></div>
                 </div>
     </div>
+    <script>
+        let map = L.map('map').setView([17.6892, 83.2150]
+        , 13);
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+        let marker = L.marker([17.6892, 83.2150]
+
+        ).addTo(map);
+    </script>

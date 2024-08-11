@@ -83,7 +83,7 @@ body {
 
 
 .card-img-top {
-    border-radius: 1rem !important;
+    border-radius: 2rem !important;
     width: 100% !important;
     object-fit: cover I !important;
 }
